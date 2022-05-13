@@ -8,7 +8,7 @@
 
 +z::
 
-SetKeyDelay, 170
+SetKeyDelay, 130
 
 Loop
 { 
@@ -17,6 +17,7 @@ Send ^c ; copy product name
     Return
 Send ^1 ; manager
 Click, 315 278 ; product search
+Send ^a ; select all text in search
 Send ^v ; paste product name
 Send ^2 ; go to excel
 Send {Right} ; category row
@@ -35,7 +36,7 @@ Elseif (color = 0xFAFAFA)
 Break Searchfinish
 }
 }
-Sleep 300
+Sleep 600
 PixelGetColor, color, 1114, 510 ; check if there are more than one product
     If (Color = 0xFFFFFF )
     {
@@ -43,38 +44,51 @@ PixelGetColor, color, 1114, 510 ; check if there are more than one product
         If (user = 1) ; first product
         {    
             Click, 1837 398 ; three dots
-            Sleep 500
+            Sleep 200
             Click, 1792 428 ; edit
         }
         If (user = 2) ; second product
         {    
             Click, 1837 465 ; three dots
-            Sleep 500
+            Sleep 200
             Click, 1792 506 ; edit
         }
         If (user = 3) ; third product
         {    
             Click, 1837 529 ; three dots
-            Sleep 500
+            Sleep 200
             Click, 1792 570 ; edit
+        }
+        If (user = 4) ; fourth product
+        {    
+            Click, 1837 594 ; three dots
+            Sleep 200
+            Click, 1792 633 ; edit
+        }
+        If (user = 5) ; fifth product
+        {    
+            Click, 1837 658 ; three dots
+            Sleep 200
+            Click, 1792 700 ; edit
         }
     }
 
     Else
     {
         Click, 1837 398 ; three dots
-        Sleep 500
+        Sleep 200
         Click, 1792 428 ; edit
     }
 
 Sleep 500
 SendInput, {Tab 10} ; navigate to category field
 Send ^v ; paste category name
+Sleep 150
+; Send, {Down} ; ------------------------------- temp
 Send {Enter} ; apply category
 SendInput, {Tab 6} ; go to Update
 Send {Enter} ; Update
 
-Sleep 2000
 PixelGetColor, color, 100, 600 ; wait for update to end
 While !(color = "0xFFFFFF")
 PixelGetColor, color, 100, 600
@@ -94,28 +108,40 @@ Else
     Send, {Left}
     Send, ^1 ; Manager
     Sleep 600
+    Sendinput {Click 317 159} ; reset tabing
     If (user = 1) ; first product
         {   
-            ; Click, 1745 400 0 
-            Click, 1745 400 ; Manage extras
+            Sendinput, {Tab 7}
+            Send, {Enter}
         }
-        If (user = 2) ; second product
+    Else If (user = 2) ; second product
         {   
-            ; Click, 1745 461 0 
-            Click, 1745 461 ; Manage extras
+            Sendinput, {Tab 11}
+            Send, {Enter}
 
         }
-        If (user = 3) ; third product
+    Else If (user = 3) ; third product
         {   
-            ; Click, 1745 529 0 
-            Click, 1745 529 ; Manage extras
+            Sendinput, {Tab 15}
+            Send, {Enter}
+        }
+    Else If (user = 4) ; second product
+        {   
+            Sendinput, {Tab 19}
+            Send, {Enter}
+
+        }
+    Else If (user = 5) ; third product
+        {   
+            Sendinput, {Tab 23}
+            Send, {Enter}
         }
     Else
     {
-        ; Click, 1745 400 0 
-        Click, 1745 400 ; Manage extras
+        Sendinput, {Tab 7}
+        Send, {Enter}
     }
-    Sleep 1000
+    Sleep 600
     ; PixelGetColor, color, 1168, 173 ; wait for manage extras
     ; While !(color = "0xFEAE1C")
     ; PixelGetColor, color, 1168, 173
@@ -144,15 +170,12 @@ Else
                         }
                     Click, 996 175 ; extra group search
                     Send, ^v ; paste extra group name
-                    Send, {Down} ; -----------------------------------------------------this is tempoary
+                    ; Send, {Down} ; -----------------------------------------------------this is tempoary
                     Send, {Enter} ; apply extra group name
                     Send, {Tab} ; go to Add existing extra group
                     Send, {Enter} ; Add existing extra group
                 }
     }
-Click 315 278 ; search bar
-Send ^a ; select all text in search
-Send {Backspace} ; delete text in search bar
 Send ^2 ; excel
 Send, ^{Left} ; far left row
 Send, {Down} ; next product 
