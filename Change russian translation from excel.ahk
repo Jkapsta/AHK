@@ -8,7 +8,7 @@
 
 +z::
 
-SetKeyDelay, 80
+SetKeyDelay, 100
 Loop
 { 
 Send ^c ; copy product name
@@ -19,7 +19,7 @@ Click, 315 278 ; product search
 Send ^a ; select all text in search
 Send ^v ; paste product name
 Send ^2 ; go to excel
-Send {Right} ; Price row
+Send {Right} ; Russian row
 Send ^c ; copy Price
 Send ^1 ; go to manager
 Sleep 100
@@ -82,11 +82,24 @@ PixelGetColor, color, 690, 178 ; wait for edit screen
 While !(color = "0x262626")
 PixelGetColor, color, 690, 178
 
-SendInput, {Tab 8} ; navigate to category field
+SendInput, {Tab 4} ; navigate to category field
 Send ^v ; paste category name
-Sleep 250
-SendInput, +{Tab 4}
-Send {Enter} ; apply category
+Send, ^2
+Send, {Right}
+Send, ^c
+Send, ^1
+    If (clipboard = "end")
+    {
+        Goto complete
+    }
+Sendinput, {Tab 3}
+Send, ^a
+Send, ^v
+Sendinput, +{Tab 3}
+
+complete:
+Send, {Enter}
+
 
 PixelGetColor, color, 100, 600 ; wait for update to end
 While !(color = "0xFFFFFF")
@@ -97,7 +110,7 @@ If (user = 0) ; fifth product
             Sendinput, {PgUp 5}
         }
 Send ^2 ; goto excel
-Send, {Left} ; far left row
+Send, ^{Left} ; far left row
 Send, {Down} ; next product 
 user := 1
     }

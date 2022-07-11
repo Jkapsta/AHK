@@ -2,7 +2,7 @@
 #noenv
 
 z:: ; copy and find product
-SetKeyDelay, 200
+SetKeyDelay, 50
 Send, ^c ; copy product name
 Send, {Right} ; Extra groups row
 Send, {Right} ; Extra groups row
