@@ -23,7 +23,7 @@
 #SingleInstance, force
 #NoEnv
 
-Setkeydelay 100
+Setkeydelay 120
 CoordMode, Mouse , Screen
 estnamex := 547
 estnamey := 179
@@ -95,9 +95,9 @@ Click, %estnamex% %estnamey%
 Sendinput, {Tab 6} ; navigate to product price
 Send, ^a
 Send, ^v ; paste product price
-Sendinput, {Tab 6} ; navigate to generate translations
+Sendinput, {Tab 7} ; navigate to generate translations
 Send, {Enter}
-Sendinput, +{Tab 4} ; navigate to category
+Sendinput, +{Tab 5} ; navigate to category
 Sendinput, %category%
 Send, {Enter}
 Return
@@ -107,8 +107,8 @@ Sendinput, {Pgup 5}
 Sleep 200
 Counter++
 Click, %estnamex% %estnamey%
-Sendinput, {Tab 10} ; navigate to upload photo
-Send, {Enter}
+Sendinput, {Tab 11} ; navigate to upload photo
+Send, {Enter}up
 Pixelgetcolor, color, 719, 307 ; Wait for windows explorer
 While !(color=0x191919)
 Pixelgetcolor, color, 719, 307
@@ -140,7 +140,7 @@ Return
 Sendinput, {Pgup 5}
 Sleep 200
 Click, %estnamex% %estnamey%
-Sendinput, {Tab 10} ; navigate to upload photo
+Sendinput, {Tab 11} ; navigate to upload photo
 Send, {Enter}
 Return
 
@@ -234,6 +234,27 @@ Return
 +!1::
 MouseGetPos, estnamex, estnamey
 MsgBox,  , Estonian name, New estonian name field location is %estnamex% %estnamey%, 2
+Return
+
+
+^l::
+SetKeyDelay, 100
+; convert the whole field to lowecase
+  Clipboard := ""
+  Send, ^a
+  SendInput, ^c ;copies selected text
+  ClipWait
+  StringLower Clipboard, Clipboard
+  SendInput %Clipboard%
+; covert the first letter to uppercase
+  Sendinput, ^{Left 100}
+  Send, {Right}
+  Send, ^+{Left}
+  Clipboard := ""
+  SendInput, ^c ;copies selected text
+  ClipWait
+  StringUpper Clipboard, Clipboard
+  SendInput %Clipboard%
 Return
 
 ; -------------------------- COUNTER ADJUSTMENTS ------------------------------- ;

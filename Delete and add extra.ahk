@@ -8,7 +8,7 @@
 
 +z::
 
-SetKeyDelay, 90
+SetKeyDelay, 120
 
 Loop
 { 
@@ -117,4 +117,19 @@ Return
 F8::
 Suspend
 Pause,, 1
+Return
+
+F1::
+SetKeyDelay, 100
+Send, {Tab}
+Loop 20
+{
+    Random, rand, 1, 32 ; choose a randome number between 1 and 32
+    Sendinput, {Down %rand%} ; go down for the amount of the random number
+    Send, {Enter} ; select chosen extra group
+    Send, {Tab} ; goto add existing extra group
+    Send, {Enter} ; apply extra group
+    Sleep 400
+    Send, +{Tab} ; go back
+}
 Return
